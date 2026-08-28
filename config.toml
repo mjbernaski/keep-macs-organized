@@ -1,0 +1,53 @@
+# Paths understand ~. The bot scans recursively.
+scan_roots = ["~/Desktop", "~/Documents", "~/Downloads"]
+
+# Entire trees the bot must never enter. Add source-code repositories and any
+# working folders whose internal structure should stay untouched.
+exclude_paths = []
+
+# Change this to an iCloud Drive folder if both Macs should share one archive.
+organized_root = "~/Documents/Organized"
+
+# Ignore new files so downloads and active work are not moved underneath you.
+min_age_hours = 24
+
+# Leave empty to allow all regular files, or list extensions without dots.
+allowed_extensions = [
+  "pdf", "txt", "md", "rtf", "doc", "docx", "xls", "xlsx", "csv",
+  "ppt", "pptx", "pages", "numbers", "key", "jpg", "jpeg", "png",
+  "heic", "tif", "tiff", "zip"
+]
+
+# Ambiguous PDFs can be classified from visual previews by the private LAN LLM.
+# mode can be "unmatched" (recommended), "all", or "off".
+[vision_llm]
+mode = "unmatched"
+endpoint = "http://192.168.5.40:8899/v1"
+model = "qwen3.8-27b"
+max_pages = 2
+minimum_confidence = 0.70
+max_files_per_run = 50
+timeout_seconds = 120
+# pdftoppm_path = "/opt/homebrew/bin/pdftoppm"
+
+# First match wins. Keep more specific categories above general ones.
+[rules.Receipts]
+keywords = ["receipt", "order confirmation", "purchase", "paid", "payment confirmation"]
+
+[rules.Financial]
+keywords = ["invoice", "statement", "bank", "credit card", "tax", "w2", "1099", "paystub", "insurance"]
+
+[rules.Travel]
+keywords = ["itinerary", "boarding pass", "reservation", "booking", "flight", "hotel", "airbnb", "rental car"]
+
+[rules.Medical]
+keywords = ["medical", "health", "doctor", "dental", "prescription", "lab result", "patient"]
+
+[rules.Legal]
+keywords = ["contract", "agreement", "lease", "license", "legal", "warranty"]
+
+[rules.Manuals]
+keywords = ["manual", "user guide", "instructions", "datasheet", "specification"]
+
+[rules.Work]
+keywords = ["project", "proposal", "meeting", "presentation", "report"]
